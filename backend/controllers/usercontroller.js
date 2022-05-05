@@ -5,7 +5,9 @@ export const getAllusers = async (req, res, next) => {
   let users;
   try {
     users = await User.find();
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+  }
 
   if (!users) {
     return res.status(404).json({ message: "No User Found", val: false });
@@ -28,7 +30,12 @@ export const signup = async (req, res, next) => {
 
   const securepassword = await bcrypt.hash(password, 10);
 
-  const signupdata = await User({ name, email, password: securepassword });
+  const signupdata = await User({
+    name,
+    email,
+    password: securepassword,
+    blogs: [],
+  });
   await signupdata.save();
   return res.status(200).json({ signupdata, val: true });
 };
