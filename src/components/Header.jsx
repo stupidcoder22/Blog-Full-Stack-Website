@@ -9,8 +9,13 @@ import {
   Typography,
 } from "@mui/material";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { authAction } from "../store/store";
 const Header = () => {
+  const isloggedin = useSelector((state) => state.isLoogedIn);
   const [value, setvalue] = useState();
+  const dispatch = useDispatch();
   return (
     <AppBar
       position="sticky"
@@ -21,61 +26,69 @@ const Header = () => {
     >
       <Toolbar>
         <Typography variant="h4">Blogs</Typography>
-        <Box display="flex" marginLeft={"auto"} marginRight="auto">
-          <Tabs
-            textColor="inherit"
-            value={value}
-            onChange={(e, val) => setvalue(val)}
-          >
-            <Tab
-              // className={classes.font}
-              LinkComponent={Link}
-              to="/blogs"
-              label="All Blogs"
-            />
-            <Tab
-              // className={classes.font}
-              LinkComponent={Link}
-              to="/userblog"
-              label="User Blogs"
-            />
-            <Tab
-              // className={classes.font}
-              // LinkComponent={Link}
-              to="/blogs/add"
-              label="Add Blog"
-            />
-          </Tabs>
-        </Box>
+        {isloggedin && (
+          <Box display="flex" marginLeft={"auto"} marginRight="auto">
+            <Tabs
+              textColor="inherit"
+              value={value}
+              onChange={(e, val) => setvalue(val)}
+            >
+              <Tab
+                // className={classes.font}
+                LinkComponent={Link}
+                to="/blogs"
+                label="All Blogs"
+              />
+              <Tab
+                // className={classes.font}
+                LinkComponent={Link}
+                to="/userblog"
+                label="User Blogs"
+              />
+              <Tab
+                // className={classes.font}
+                // LinkComponent={Link}
+                to="/blogs/add"
+                label="Add Blog"
+              />
+            </Tabs>
+          </Box>
+        )}
         <Box display="flex" marginLeft="auto">
-          <Button
-            color="warning"
-            sx={{ margin: 1, borderRadius: 10 }}
-            variant="contained"
-            LinkComponent={Link}
-            to="/auth"
-          >
-            Login
-          </Button>
-          <Button
-            color="warning"
-            sx={{ margin: 1, borderRadius: 10 }}
-            variant="contained"
-            LinkComponent={Link}
-            to="/auth"
-          >
-            Signup
-          </Button>
-          <Button
-            // onClick={() => dispath(authActions.logout())}
-            LinkComponent={Link}
-            to="/auth"
-            variant="contained"
-            sx={{ margin: 1, borderRadius: 10 }}
-            color="warning"
-          >
-            Logout
-          </Button>
+          {!isloggedin && (
+            <>
+              <Button
+                color="warning"
+                sx={{ margin: 1, borderRadius: 10 }}
+                variant="contained"
+                LinkComponent={Link}
+                to="/auth"
+              >
+                Login
+              </Button>
+              <Button
+                color="warning"
+                sx={{ margin: 1, borderRadius: 10 }}
+                variant="contained"
+                LinkComponent={Link}
+                to="/auth"
+              >
+                Signup
+              </Button>
+            </>
+          )}
+          {isloggedin && (
+            <Button
+              onClick={() => dispatch(authAction.logout())}
+              LinkComponent={Link}
+              to="/auth"
+              variant="contained"
+              sx={{ margin: 1, borderRadius: 10 }}
+              color="warning"
+            >
+              Logout
+            </Button>
+          )}
         </Box>
       </Toolbar>
     </AppBar>

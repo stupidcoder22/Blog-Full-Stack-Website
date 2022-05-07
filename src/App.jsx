@@ -1,3 +1,4 @@
+import { useSelector } from "react-redux";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import Addblog from "./components/Addblog";
@@ -7,6 +8,8 @@ import Blogs from "./components/Blogs";
 import Header from "./components/Header";
 import Userblog from "./components/Userblog";
 function App() {
+  const isloggedin = useSelector((state) => state.isLoogedIn);
+  console.log(isloggedin);
   return (
     <>
       <Header />
