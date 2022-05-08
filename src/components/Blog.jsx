@@ -13,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 export default function Blog({ data, isUser, id }) {
+  console.log(id);
   const { description, image, title, user } = data;
   const navigate = useNavigate();
   const handleEdit = () => {
@@ -28,6 +29,7 @@ export default function Blog({ data, isUser, id }) {
   };
   const handleDelete = async () => {
     const res = await deleteRequest();
+    // navigate("/blogs");
     console.log(res);
   };
   return (
