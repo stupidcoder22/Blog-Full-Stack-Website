@@ -4,14 +4,14 @@ import User from "../models/User.js";
 export const getAllblogs = async (req, res, next) => {
   let blog;
   try {
-    blog = await Blog.find();
+    blog = await Blog.find().populate("user");
   } catch (error) {
     console.log(error);
   }
   if (!blog) {
     return res.status(404).json({ message: "No Blog Found", val: false });
   }
-  return res.status(200).json({ blog });
+  return res.status(200).json({ blog, val: true });
 };
 
 export const addBlog = async (req, res, next) => {
@@ -47,7 +47,6 @@ export const updateBlog = async (req, res, next) => {
       { title, description },
       { new: true }
     );
-    console.log(blog);
   } catch (error) {
     console.log(error);
   }
@@ -90,4 +89,18 @@ export const getbyuserid = async (req, res, next) => {
     res.status(404).json({ message: "No blog found" });
   }
   return res.status(200).json({ message: userBlog });
+};
+
+export const getbyid = async (req, res, next) => {
+  const id = req.params.id;
+  let blog;
+  try {
+    blog = await Blog.findById(id);
+  } catch (err) {
+    return console.log(err);
+  }
+  if (!blog) {
+    return res.status(404).json({ message: "No Blog Found" });
+  }
+  return res.status(200).json({ blog });
 };

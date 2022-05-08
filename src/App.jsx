@@ -9,7 +9,6 @@ import Header from "./components/Header";
 import Userblog from "./components/Userblog";
 function App() {
   const isloggedin = useSelector((state) => state.isLoogedIn);
-  console.log(isloggedin);
   return (
     <>
       <Header />

@@ -47,7 +47,7 @@ const Header = () => {
               />
               <Tab
                 // className={classes.font}
-                // LinkComponent={Link}
+                LinkComponent={Link}
                 to="/blogs/add"
                 label="Add Blog"
               />

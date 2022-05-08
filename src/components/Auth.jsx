@@ -23,17 +23,19 @@ const Auth = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(inputs);
     if (isSignup) {
       const { data } = await sendRequest("signup");
       if (data.val) {
         dispatch(authAction.login());
+        localStorage.setItem("id", data.emailCheck._id);
         navigate("/blogs");
       }
     } else {
       const { data } = await sendRequest();
       if (data.val) {
         dispatch(authAction.login());
+        console.log(data.emailCheck._id);
+        localStorage.setItem("id", data.emailCheck._id);
         navigate("/blogs");
       }
     }
@@ -47,7 +49,7 @@ const Auth = () => {
         password: inputs.password,
       })
       .catch((err) => console.log(err));
-    // console.log(response);
+    // console.log(response.data.emailCheck._id);
     return response;
   };
   return (
