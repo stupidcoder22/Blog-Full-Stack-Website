@@ -1,1 +1,1 @@
-# Getting Started with Create React App
+# BLOG WEBSITE using MERN and REDUX
